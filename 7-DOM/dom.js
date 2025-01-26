@@ -1,3 +1,4 @@
+//this is my version of the solution
 let ads = [
     {
         title: "Skoda oktavia 2014",
@@ -10,10 +11,12 @@ let ads = [
         image: "https://www.akkompresor.rs/files/thumbs/"
     }
 ];
-
+let element = document.querySelector("#container");
+let text = "";
 for (let value in ads) {
-    document.querySelector("#container").textContent = ads[value];
-}
+    text += `${ads[value].title},  ${ads[value].price}  and  ${ads[value].image}|||`;
+    element.textContent = text
+};
 
 
 
