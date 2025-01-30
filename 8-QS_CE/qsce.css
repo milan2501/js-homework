@@ -5,9 +5,12 @@ body {
     min-height: 100vh;
     background-color: whitesmoke;
 }
-.tit {
-    padding-left: 600px;
+h1 {
+    grid-row: 1; 
+    grid-column: 1;
+    text-align: center;
 }
+
 #carGallery {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -43,9 +46,17 @@ p {
     font-weight: bold;
     font-family: Verdana, Geneva, Tahoma, sans-serif
 }
+.img .newCar {
+    padding-left: 20px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-
-
+.img:hover .newCar {
+    opacity: 1;
+}
 
 
 
