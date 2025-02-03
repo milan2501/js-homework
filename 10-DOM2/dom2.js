@@ -5,6 +5,7 @@ let typesSelector = document.querySelector("#types");
 let search = document.querySelector("#search");
 
 let citiesArray = [
+    "svi",
     "Belgrade", 
     "Zagreb", 
     "Ljubljana", 
@@ -95,7 +96,7 @@ let arrOfObjects = [
         price: 110000
     },
     {
-        city: "Maribor",
+        city: "",
         option: "plac",
         type: null,
         size: 850,
@@ -109,6 +110,17 @@ for (let city of citiesArray) {
     optCity.textContent = city;
     optCity.value = city.toLowerCase();
     citiesSelector.appendChild(optCity);
+
+    let cityFound = false;
+    for (let item of arrOfObjects) {
+        if (item.city === city) {
+            cityFound = true;
+            break;
+        }
+    }
+    if (!cityFound) {
+        optCity.setAttribute("disabled", true);
+    }
 }
 
 for (let pick of optionsArray) {
@@ -123,6 +135,32 @@ for (let type of apartmentsTypes) {
     optTypes.textContent = type;
     optTypes.value = type.toLowerCase();
     typesSelector.appendChild(optTypes);
+}
+
+let realEstate = document.querySelector(".realEstate");
+
+for (let el of arrOfObjects) {
+    let obj = document.createElement("div");
+    obj.classList.add("objects");
+    let title = document.createElement("h4");
+    title.classList.add("city")
+    title.textContent = el.city + " " + el.option;
+    let types = document.createElement("p");
+    types.textContent = `Type: ${el.type}`;
+    let sizes = document.createElement("p");
+    sizes.textContent = `Size: ${el.size}`;
+    let prices = document.createElement("p");
+    prices.textContent = `Price: ${el.price}`;
+    let separateLine = document.createElement("p");
+    separateLine.textContent = "-----------"
+    obj.append(title, types, sizes, prices, separateLine);
+    
+    // Ovo je bila neka moja verzija resenja... 
+
+    // if (!el.city || !el.option || !el.type || !el.size || !el.price) {
+    //     obj.classList.add("disable"); 
+    // }
+    realEstate.append(obj); 
 }
 
 let currentCity = null;
@@ -142,26 +180,9 @@ typesSelector.addEventListener("change", function(e) {
 })
 
 
-let realEstate = document.querySelector(".realEstate");
 
-for (let el of arrOfObjects) {
-    let obj = document.createElement("div");
-    let title = document.createElement("h4");
-    title.classList.add("city")
-    title.textContent = el.city + " " + el.option;
-    let types = document.createElement("p");
-    types.textContent = el.type;
-    let sizes = document.createElement("p");
-    sizes.textContent = el.size;
-    let prices = document.createElement("p");
-    prices.textContent = el.price;
-    let separateLine = document.createElement("p");
-    separateLine.textContent = "-----------"
-    obj.append(title, types, sizes, prices, separateLine);
-    realEstate.append(obj);  
-}
 
-console.log(realEstate.querySelector(".obj"));
+
 
 
 
