@@ -1,15 +1,12 @@
-
-function login(userName, password) {
-    if (userName === "admin" && password === "admin") {
-        return true;
-    } else {
-        return false;
-    }
-}
-console.log(login("admin", "admin"))
+const canvas = document.getElementById("myCanvas");
+const contex = canvas.getContext("2d");
 
 
-
+contex.beginPath();
+contex.arc(75, 75, 50, 1, 5 * Math.PI)
+contex.stroke()
+contex.fillStyle = "green";
+contex.fill();
 
 
 
