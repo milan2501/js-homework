@@ -1,41 +1,125 @@
-let canvas = document.querySelector("#myCanvas");
+
+let canvas = document.querySelector("#drawArea");
 let ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+let addBtn = document.querySelector("#add");
+let resetBtn = document.querySelector("#reset");
 
 
-let dx = 2;
-let dy = 2;
-let x, y;
+let colors = ["red", "green", "blue", "yellow"];
+let array = [];
+canvas.addEventListener("click", function (e) {
+    let rect = canvas.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+    array.push({ x: x, y: y });
+    if (array.length >= 5) {
+        
+        //printing of coordinates
+        ctx.beginPath();
+        ctx.moveTo(array[0].x, array[0].y);
+      
+        for (let i in array) {
+            ctx.lineTo(array[i].x, array[i].y);
+        };
+        
+        //getting of random colors and adding draw
+        addBtn.addEventListener("click", function() {
+            for (let j = 0; j < colors.length; j++) {
+                let randomColor = Math.floor(Math.random()  * colors.length);
+                ctx.strokeStyle = colors[randomColor];
+                ctx.lineWidth = 2;
+            }
+            ctx.stroke();
+        })
+        array = [];
+    }
+    
+    
+    //delete button
+    resetBtn.addEventListener("click", function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    })
 
-
-let handEventListener = (event) => {
-    x = event.x;
-    y = event.y;
 }
+);
 
-function drawCircle(a, b) {
-    let size = 10;
-    ctx.beginPath();
-    ctx.arc(a, b, size, 0, 2 * Math.PI);
-    ctx.strokeStyle = "white";
-    ctx.fillStyle = "red";
-    ctx.fill();
-    ctx.stroke();
-}
 
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    x += dx;
 
-    drawCircle(x, y);
 
-    requestAnimationFrame(animate)
 
-}
-animate()
 
-canvas.addEventListener("click", handEventListener);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
