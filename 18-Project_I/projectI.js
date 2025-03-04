@@ -8,17 +8,16 @@ let container = document.querySelector('#container');
 let selectBtn = document.querySelector('#movieType');
 let selectedValue = null;
 
-let choice = selectBtn.addEventListener('change', function(event) {
+
+selectBtn.addEventListener('change', function(event) {
     selectedValue = event.currentTarget.value;
-    console.log(selectedValue)
 });
 
-console.log(choice)
-
 playBtn.addEventListener('click', async function () {
-    let titleInput = document.querySelector('#title').value;
-    let yearInput = document.querySelector('#year').value;
-    let response = await callOMDbApi(titleInput, yearInput);
+    let titleInput = document.querySelector('#title').value.trim();
+    let yearInput = document.querySelector('#year').value.trim();
+
+    let response = await callOMDbApi(titleInput, yearInput, selectedValue);
 
     if (titleInput === '') return alert('Please enter the name of movie.');
         
@@ -31,27 +30,90 @@ playBtn.addEventListener('click', async function () {
 
 
 
-async function callOMDbApi(s, y) {
-    let params = new URLSearchParams({ apiKey, s, y });
+async function callOMDbApi(s, y, type) {
+    let params = new URLSearchParams({ apiKey, s });
+
+    if (y) params.append("y", y);
+    if (type) params.append("type", type);
+
     let url = apiUrl + '?' + params.toString();
     let response = await fetch(url);
     let data = await response.json();
     return data;
 }
 
+
+
 function displayMovie(data) {
     container.innerHTML = '';
     for (let i = 0; i < data.Search.length; i++) {
         let movieBox = document.createElement('div');
+        let permalinkBox = document.createElement('a');
+        permalinkBox.href = 'permalink.html?id='+data.Search[i].imdbID;
+        permalinkBox.target = '_blank';
         movieBox.classList.add('movieBox');
-        let movieTitle = document.createElement('h3')
+        let movieTitle = document.createElement('h3');
         movieTitle.innerText = `${data.Search[i].Title} (${data.Search[i].Year})`;
         let moviePoster = document.createElement('img');
         moviePoster.src = data.Search[i].Poster !== 'N/A' ? data.Search[i].Poster : 'placeholder.jpg';
         moviePoster.alt = data.Search[i].Title;
         moviePoster.style.width = '300px';
+        movieBox.dataset.imdbID = data.Search[i].imdbID;
         movieBox.append(movieTitle, moviePoster);
-        container.append(movieBox);
+        permalinkBox.append(movieBox)
+        container.append(permalinkBox);
     } 
     return container;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
